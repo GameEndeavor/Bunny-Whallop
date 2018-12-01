@@ -11,11 +11,12 @@ config_version=3
 [application]
 
 config/name="LudumDare43"
-run/main_scene="res://Level/Levels/TheButton.tscn"
+run/main_scene="res://Level/Levels/Debug.tscn"
 config/icon="res://icon.png"
 
 [autoload]
 
+Utility="*res://Utility.gd"
 Global="*res://Global.gd"
 
 [display]
