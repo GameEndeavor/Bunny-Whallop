@@ -20,10 +20,8 @@ func state_physics_process(delta):
 	
 	# WALL_SLIDING
 	elif state == WALL_SLIDING:
-#		if parent.velocity.y < 0:
-#		else:
-#			parent._apply_gravity(delta, parent.WALL_SLIDE_GRAVITY_MODIFIER)
-		parent._apply_gravity(delta)
+		var max_velocity = parent.MAX_VELOCITY if Input.is_action_pressed("move_down") else parent.WALL_SLIDE_MAX_VELOCITY
+		parent._apply_gravity(delta, max_velocity)
 		parent.set_body_facing(-parent.facing)
 		parent._apply_movement()
 		if parent.move_direction != 0 && !parent._check_wall_sliding():
@@ -117,7 +115,6 @@ func _state_enter(state):
 	elif state == JUMPING && (previous_state == IDLE || previous_state == RUNNING):
 		parent.camera.is_steady = true
 	elif state == WALL_SLIDING:
-		parent.max_fall_speed = parent.WALL_SLIDE_MAX_VELOCITY
 		parent.wall_stick_duration = 0
 		parent.velocity.x = 0
 
@@ -127,7 +124,6 @@ func _state_exit(old_state, new_state):
 	elif (old_state == JUMPING && new_state != null && new_state != FALLING) || old_state == FALLING:
 		parent.camera.is_steady = false
 	elif old_state == WALL_SLIDING:
-		parent.max_fall_speed = parent.DEFAULT_MAX_VELOCITY
 		parent.wall_slide_wait_timer.start()
 
 func _set_state(value):

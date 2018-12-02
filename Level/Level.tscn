@@ -7,6 +7,8 @@
 
 [node name="Tilemaps" type="Node2D" parent="." index="0"]
 
+editor/display_folded = true
+
 [node name="Hazards" type="TileMap" parent="Tilemaps" index="0"]
 
 mode = 0
@@ -48,7 +50,9 @@ format = 1
 tile_data = PoolIntArray(  )
 _sections_unfolded = [ "Transform" ]
 
-[node name="Characters" type="Node2D" parent="." index="1"]
+[node name="PuzzleElements" type="Node2D" parent="." index="1"]
+
+[node name="Characters" type="Node2D" parent="." index="2"]
 
 [node name="Player" type="Node2D" parent="Characters" index="0"]
 

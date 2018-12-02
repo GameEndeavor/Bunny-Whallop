@@ -1,0 +1,42 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Elements/Door.gd" type="Script" id=1]
+[ext_resource path="res://Elements/Door.png" type="Texture" id=2]
+
+[node name="Door" type="Node2D"]
+
+z_index = -10
+script = ExtResource( 1 )
+_sections_unfolded = [ "Z Index" ]
+
+[node name="KinematicBody2D" type="StaticBody2D" parent="." index="0"]
+
+input_pickable = false
+collision_layer = 1
+collision_mask = 1
+constant_linear_velocity = Vector2( 0, 0 )
+constant_angular_velocity = 0.0
+friction = 1.0
+bounce = 0.0
+
+[node name="Sprite" type="Sprite" parent="KinematicBody2D" index="0"]
+
+texture = ExtResource( 2 )
+centered = false
+_sections_unfolded = [ "Offset" ]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="KinematicBody2D" index="1"]
+
+build_mode = 0
+polygon = PoolVector2Array( 0, 0, 64, 0, 64, 128, 0, 128 )
+
+[node name="StateTween" type="Tween" parent="." index="1"]
+
+repeat = false
+playback_process_mode = 1
+playback_speed = 1.0
+playback/active = false
+playback/repeat = false
+playback/speed = 1.0
+
+

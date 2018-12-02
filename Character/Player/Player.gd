@@ -5,14 +5,13 @@ const SLOPE_SLIDE_STOP = 5
 const MIN_JUMP_HEIGHT = 0.8 * 64
 const FALL_DURATION = 0.5 # Time in seconds it should take the player to fall 'Global.PLAYER_JUMP_HEIGHT' distance
 const WALL_STICK_CHECK = 0.3 # Time in seconds player can move away from wall but still stick to it.
-const WALL_CLIMB_HEIGHT = 4.25 * 64
+const WALL_CLIMB_HEIGHT = 5.25 * 64
 const WALL_LEAP_HEIGHT = 2.5 * 64
-const DEFAULT_MAX_VELOCITY = 1200
+const MAX_VELOCITY = 1200
 const WALL_SLIDE_MAX_VELOCITY = 150
 const WALL_SLIDE_GRAVITY_MODIFIER = 0.25
 
 var velocity = Vector2()
-var max_fall_speed = DEFAULT_MAX_VELOCITY
 var is_grounded = false
 var move_direction = 0 # Direction player is attempting to move
 var facing = 1 # Direction the player is facing
@@ -22,7 +21,7 @@ var wall_stick_duration = 0 # Current duration player has been moving away from 
 onready var fall_gravity = 2 * Global.PLAYER_JUMP_HEIGHT / pow(FALL_DURATION, 2)
 onready var max_jump_velocity = Utility.get_velocity_from_height(Global.PLAYER_JUMP_HEIGHT)
 onready var min_jump_velocity = Utility.get_velocity_from_height(MIN_JUMP_HEIGHT)
-onready var wall_climb_velocity = Vector2(800, Utility.get_velocity_from_height(WALL_CLIMB_HEIGHT))
+onready var wall_climb_velocity = Vector2(1200, Utility.get_velocity_from_height(WALL_CLIMB_HEIGHT))
 onready var wall_leap_velocity = Vector2(800, Utility.get_velocity_from_height(WALL_LEAP_HEIGHT))
 
 onready var camera = $PlatformerCamera
@@ -35,6 +34,7 @@ func _physics_process(delta):
 	# Get input to determine which way to attempt to move
 	move_direction = -int(Input.is_action_pressed("move_left")) + int(Input.is_action_pressed("move_right"))
 	state_machine.state_physics_process(delta)
+	_check_raycasts(ground_raycasts)
 	
 	var was_grounded = is_grounded
 	is_grounded = is_on_floor()
@@ -56,13 +56,13 @@ func set_body_facing(facing = self.facing):
 
 # Apply gravity based on whether character is jumping or falling. Slow gravity when falling to allow
 # the player more time to align their landing.
-func _apply_gravity(delta, modifier = 1):
+func _apply_gravity(delta, max_velocity = MAX_VELOCITY):
 	if velocity.y < 0:
-		velocity.y += Global.gravity * delta * modifier
+		velocity.y += Global.gravity * delta
 	else:
-		velocity.y += fall_gravity * delta * modifier
+		velocity.y += fall_gravity * delta
 	
-	velocity.y = min(velocity.y, max_fall_speed)
+	velocity.y = min(velocity.y, max_velocity)
 
 # Move player with physics
 func _apply_movement():
@@ -71,11 +71,14 @@ func _apply_movement():
 # Loop through the children of a given node, checking for RayCast2D's and returns
 # a boolean based on whether any collision was detected
 func _check_raycasts(raycasts):
+	var is_colliding = false
 	for raycast in raycasts.get_children():
 		if raycast is RayCast2D and raycast.is_colliding():
-				return true
-	# If loop completes then no raycast was detected.
-	return false
+			var collider = raycast.get_collider()
+			if !collider is TileMap && collider.get_parent().has_method("interact"):
+				collider.get_parent().interact()
+			is_colliding = true
+	return is_colliding
 
 # Checks conditions to determine what weight to apply to character acceleration / deceleration
 func _get_h_weight(target_speed):
