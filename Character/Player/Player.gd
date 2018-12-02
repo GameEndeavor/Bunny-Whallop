@@ -8,6 +8,7 @@ const WALL_STICK_CHECK = 0.3 # Time in seconds player can move away from wall bu
 const WALL_CLIMB_HEIGHT = 5.25 * 64
 const WALL_HOP_HEIGHT = 3.5 * 64
 const WALL_LEAP_HEIGHT = 2.5 * 64
+const THROW_HEIGHT = 2.5 * 64
 const MAX_VELOCITY = 1200
 const WALL_SLIDE_MAX_VELOCITY = 150
 const WALL_SLIDE_GRAVITY_MODIFIER = 0.25
@@ -18,6 +19,8 @@ var move_direction = 0 # Direction player is attempting to move
 var facing = 1 # Direction the player is facing
 var wall_direction = 0 setget ,_get_wall_direction # Direction of the wall if the player is wall_sliding
 var wall_stick_duration = 0 # Current duration player has been moving away from wall
+var held_object = null setget _set_held_object,_get_held_object
+var obj_container
 
 onready var fall_gravity = 2 * Global.PLAYER_JUMP_HEIGHT / pow(FALL_DURATION, 2)
 onready var max_jump_velocity = Utility.get_velocity_from_height(Global.PLAYER_JUMP_HEIGHT)
@@ -25,6 +28,7 @@ onready var min_jump_velocity = Utility.get_velocity_from_height(MIN_JUMP_HEIGHT
 onready var wall_climb_velocity = Vector2(1200, Utility.get_velocity_from_height(WALL_CLIMB_HEIGHT))
 onready var wall_hop_velocity = Vector2(600, Utility.get_velocity_from_height(WALL_HOP_HEIGHT))
 onready var wall_leap_velocity = Vector2(1200, Utility.get_velocity_from_height(WALL_LEAP_HEIGHT))
+onready var throw_velocity = Vector2(600, Utility.get_velocity_from_height(THROW_HEIGHT))
 
 onready var camera = $PlatformerCamera
 onready var ground_raycasts = $GroundRaycasts
@@ -32,6 +36,7 @@ onready var body = $Body
 onready var state_machine = $PlayerStateMachine
 onready var wall_slide_wait_timer = $WallSlideWaitTimer
 onready var coyote_timer = $CoyoteTimer
+onready var grab_detection = $GrabDetection
 
 func _physics_process(delta):
 	# Get input to determine which way to attempt to move
@@ -73,6 +78,42 @@ func _apply_gravity(delta, max_velocity = MAX_VELOCITY):
 # Move player with physics
 func _apply_movement():
 	velocity = move_and_slide(velocity, Global.UP_VEC, SLOPE_SLIDE_STOP)
+
+func grab_nearest():
+	# Get bodies within reach
+	var bodies = grab_detection.get_overlapping_bodies()
+	# Set closest distance to max range so we can find what's even closer
+	var closest_distance = grab_detection.get_node("CollisionShape2D").shape.radius
+	var closest = null
+	
+	for body in bodies:
+		if (body.position - position).length() <= closest_distance:
+			closest = body
+	
+	if closest != null:
+		pickup(closest)
+
+func pickup(entity):
+	# Disable processing such as gravity for the object
+	entity.set_physics_process(false)
+	# Reparent to our hand
+	obj_container = entity.get_parent()
+	obj_container.remove_child(entity)
+	$Body/Hand.add_child(entity)
+	entity.position = Vector2()
+	_set_held_object(entity)
+
+func throw_held_object():
+	var held_object = _get_held_object()
+	if held_object != null:
+		var pos = held_object.global_position
+		$Body/Hand.remove_child(held_object)
+		obj_container.add_child(held_object)
+		held_object.global_position = pos
+		held_object.velocity = throw_velocity * Vector2(facing, 1)
+		held_object.set_physics_process(true)
+		_set_held_object(null)
+	
 
 # Loop through the children of a given node, checking for RayCast2D's and returns
 # a boolean based on whether any collision was detected
@@ -131,3 +172,14 @@ func _on_HitboxArea_body_entered(body):
 	if body is TileMap:
 		get_tree().reload_current_scene()
 	pass # replace with function body
+
+func _set_held_object(value):
+	if value != null:
+		held_object = weakref(value)
+	else:
+		held_object = null
+
+func _get_held_object():
+	if held_object == null: return null
+	else:
+		return held_object.get_ref()

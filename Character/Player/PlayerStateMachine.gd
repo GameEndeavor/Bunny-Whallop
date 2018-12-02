@@ -36,6 +36,14 @@ func state_physics_process(delta):
 func state_input(event):
 	if state == null: return
 	
+	# Grab / Throw
+	elif event.is_action_pressed("grab"):
+		# Grab nearest object within reach if parent isn't holding anything
+		if parent.held_object == null:
+			parent.grab_nearest()
+		else:
+			parent.throw_held_object()
+	
 	# Jump
 	elif event.is_action_pressed("jump"):
 		# Regular Jump

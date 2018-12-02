@@ -6,17 +6,17 @@
 [sub_resource type="RectangleShape2D" id=1]
 
 custom_solver_bias = 0.0
-extents = Vector2( 16, 16 )
+extents = Vector2( 24, 24 )
 
 [sub_resource type="RectangleShape2D" id=2]
 
 custom_solver_bias = 0.0
-extents = Vector2( 24, 24 )
+extents = Vector2( 48, 48 )
 
 [node name="Critter" type="KinematicBody2D"]
 
 input_pickable = false
-collision_layer = 0
+collision_layer = 160
 collision_mask = 1
 collision/safe_margin = 0.08
 script = ExtResource( 1 )
@@ -24,7 +24,7 @@ _sections_unfolded = [ "Collision" ]
 
 [node name="Sprite" type="Sprite" parent="." index="0"]
 
-scale = Vector2( 0.5, 0.5 )
+scale = Vector2( 0.75, 0.75 )
 texture = ExtResource( 2 )
 _sections_unfolded = [ "Transform" ]
 

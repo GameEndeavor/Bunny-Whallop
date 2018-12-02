@@ -8,7 +8,7 @@
 [ext_resource path="res://Character/Critters/AbstractCritter.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Character/Player/Player.tscn" type="PackedScene" id=7]
 
-[node name="Level" instance=ExtResource( 1 )]
+[node name="Level" index="0" instance=ExtResource( 1 )]
 
 [node name="Tilemaps" parent="." index="0"]
 
@@ -16,7 +16,7 @@ editor/display_folded = false
 
 [node name="Hazards" parent="Tilemaps" index="0"]
 
-tile_data = PoolIntArray( -1114080, -1610612736, 0, -1048544, -1610612736, 0, -983008, -1610612736, 0, -917472, -1610612736, 0, -851936, -1610612736, 0, -786400, -1610612736, 0, -655325, -1073741824, 0, -589789, -1073741824, 0, -524253, -1073741824, 0, -458717, -1073741824, 0, -393195, 0, 0, -393194, 0, 0, -393193, 0, 0, -393192, 0, 0, -393191, 0, 0, -393190, 0, 0, -393189, 0, 0, -393188, 0, 0, -131037, -1073741824, 0, -65501, -1073741824, 0, 589801, 0, 0, 589802, 0, 0, 589803, 0, 0, 589804, 0, 0, 589805, 0, 0, 589806, 0, 0, 589807, 0, 0, 589808, 0, 0, 589840, 0, 0, 589841, 0, 0, 589842, 0, 0, 589843, 0, 0, 655386, 0, 0, 655387, 0, 0, 655388, 0, 0, 655389, 0, 0, 655390, 0, 0, 851956, 0, 0, 851957, 0, 0, 851958, 0, 0, 851962, 0, 0, 851963, 0, 0, 851964, 0, 0, 851965, 0, 0 )
+tile_data = PoolIntArray( -1114080, -1610612736, 0, -1048544, -1610612736, 0, -983008, -1610612736, 0, -917472, -1610612736, 0, -851936, -1610612736, 0, -786400, -1610612736, 0, -655325, -1073741824, 0, -589789, -1073741824, 0, -524253, -1073741824, 0, -458717, -1073741824, 0, -393195, 0, 0, -393194, 0, 0, -393193, 0, 0, -393192, 0, 0, -393191, 0, 0, -393190, 0, 0, -393189, 0, 0, -393188, 0, 0, -131037, -1073741824, 0, -65501, -1073741824, 0, 393222, -1610612736, 0, 458758, -1610612736, 0, 589801, 0, 0, 589802, 0, 0, 589803, 0, 0, 589804, 0, 0, 589805, 0, 0, 589806, 0, 0, 589807, 0, 0, 589808, 0, 0, 589840, 0, 0, 589841, 0, 0, 589842, 0, 0, 589843, 0, 0, 655386, 0, 0, 655387, 0, 0, 655388, 0, 0, 655389, 0, 0, 655390, 0, 0, 851956, 0, 0, 851957, 0, 0, 851958, 0, 0, 851962, 0, 0, 851963, 0, 0, 851964, 0, 0, 851965, 0, 0 )
 
 [node name="Layer0" parent="Tilemaps" index="1"]
 
@@ -46,15 +46,23 @@ position = Vector2( -1472, -192 )
 
 position = Vector2( -1280, 0 )
 
-[node name="Critter2" parent="Characters/Critters" index="1" instance=ExtResource( 6 )]
+[node name="Critter5" parent="Characters/Critters" index="1" instance=ExtResource( 6 )]
+
+position = Vector2( 128, 320 )
+
+[node name="Critter6" parent="Characters/Critters" index="2" instance=ExtResource( 6 )]
+
+position = Vector2( 0, 320 )
+
+[node name="Critter2" parent="Characters/Critters" index="3" instance=ExtResource( 6 )]
 
 position = Vector2( -1344, 0 )
 
-[node name="Critter3" parent="Characters/Critters" index="2" instance=ExtResource( 6 )]
+[node name="Critter3" parent="Characters/Critters" index="4" instance=ExtResource( 6 )]
 
 position = Vector2( -448, 640 )
 
-[node name="Critter4" parent="Characters/Critters" index="3" instance=ExtResource( 6 )]
+[node name="Critter4" parent="Characters/Critters" index="5" instance=ExtResource( 6 )]
 
 position = Vector2( -512, 640 )
 
