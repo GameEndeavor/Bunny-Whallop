@@ -15,7 +15,7 @@ extents = Vector2( 32, 32 )
 custom_solver_bias = 0.0
 extents = Vector2( 20, 20 )
 
-[node name="Player" type="KinematicBody2D" index="0"]
+[node name="Player" type="KinematicBody2D"]
 
 input_pickable = false
 collision_layer = 32
@@ -122,6 +122,16 @@ process_mode = 1
 wait_time = 0.2
 one_shot = true
 autostart = false
+
+[node name="GrabDetection" type="Area2D" parent="." index="9"]
+
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+audio_bus_override = false
+audio_bus_name = "Master"
 
 [connection signal="body_entered" from="HitboxArea" to="." method="_on_HitboxArea_body_entered"]
 

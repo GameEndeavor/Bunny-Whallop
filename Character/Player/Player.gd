@@ -86,6 +86,16 @@ func _check_raycasts(raycasts):
 			is_colliding = true
 	return is_colliding
 
+func _set_velocity_to_floor(raycasts = ground_raycasts):
+	var min_velocity = MAX_VELOCITY
+	var is_colliding = false
+	for raycast in raycasts.get_children():
+		if raycast is RayCast2D && raycast.is_colliding() && raycast.get_collider().get_parent().get("velocity"):
+			is_colliding = true
+			min_velocity = raycast.get_collider().get_parent().velocity.y
+	if is_colliding:
+		velocity.y = min_velocity
+
 # Checks conditions to determine what weight to apply to character acceleration / deceleration
 func _get_h_weight(target_speed):
 	var weight = 0.4 if is_grounded else 0.125

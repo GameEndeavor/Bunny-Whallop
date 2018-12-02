@@ -14,6 +14,7 @@ func state_physics_process(delta):
 	
 	elif state == IDLE || state == RUNNING || state == JUMPING || state == FALLING:
 		parent._apply_gravity(delta)
+#		parent._set_velocity_to_floor()
 		parent._apply_h_movement()
 		parent.set_body_facing()
 		parent._apply_movement()

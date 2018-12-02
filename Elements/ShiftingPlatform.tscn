@@ -4,7 +4,7 @@
 [ext_resource path="res://Elements/ShftingPlatform.png" type="Texture" id=2]
 [ext_resource path="res://Tilesets/ProtoTileset/Spikes.png" type="Texture" id=3]
 
-[node name="ShiftingPlatform" type="Node2D"]
+[node name="ShiftingPlatform" type="Node2D" index="0"]
 
 script = ExtResource( 1 )
 
@@ -66,5 +66,97 @@ polygon = PoolVector2Array( 68, 192, 252, 192, 244, 208, 76, 208 )
 
 build_mode = 0
 polygon = PoolVector2Array( 0, 0, 320, 0, 320, 128, 256, 192, 64, 192, 0, 128 )
+
+[node name="RiderRaycasts" type="Node2D" parent="." index="1"]
+
+editor/display_folded = true
+
+[node name="RayCast2D" type="RayCast2D" parent="RiderRaycasts" index="0"]
+
+position = Vector2( 0, 1 )
+enabled = false
+exclude_parent = true
+cast_to = Vector2( 0, -16 )
+collision_mask = 1
+
+[node name="RayCast2D2" type="RayCast2D" parent="RiderRaycasts" index="1"]
+
+position = Vector2( 32, 1 )
+enabled = false
+exclude_parent = true
+cast_to = Vector2( 0, -16 )
+collision_mask = 1
+
+[node name="RayCast2D3" type="RayCast2D" parent="RiderRaycasts" index="2"]
+
+position = Vector2( 64, 1 )
+enabled = false
+exclude_parent = true
+cast_to = Vector2( 0, -16 )
+collision_mask = 1
+
+[node name="RayCast2D4" type="RayCast2D" parent="RiderRaycasts" index="3"]
+
+position = Vector2( 96, 1 )
+enabled = false
+exclude_parent = true
+cast_to = Vector2( 0, -16 )
+collision_mask = 1
+
+[node name="RayCast2D5" type="RayCast2D" parent="RiderRaycasts" index="4"]
+
+position = Vector2( 128, 1 )
+enabled = false
+exclude_parent = true
+cast_to = Vector2( 0, -16 )
+collision_mask = 1
+
+[node name="RayCast2D6" type="RayCast2D" parent="RiderRaycasts" index="5"]
+
+position = Vector2( 160, 1 )
+enabled = false
+exclude_parent = true
+cast_to = Vector2( 0, -16 )
+collision_mask = 1
+
+[node name="RayCast2D7" type="RayCast2D" parent="RiderRaycasts" index="6"]
+
+position = Vector2( 192, 1 )
+enabled = false
+exclude_parent = true
+cast_to = Vector2( 0, -16 )
+collision_mask = 1
+
+[node name="RayCast2D8" type="RayCast2D" parent="RiderRaycasts" index="7"]
+
+position = Vector2( 224, 1 )
+enabled = false
+exclude_parent = true
+cast_to = Vector2( 0, -16 )
+collision_mask = 1
+
+[node name="RayCast2D9" type="RayCast2D" parent="RiderRaycasts" index="8"]
+
+position = Vector2( 256, 1 )
+enabled = false
+exclude_parent = true
+cast_to = Vector2( 0, -16 )
+collision_mask = 1
+
+[node name="RayCast2D10" type="RayCast2D" parent="RiderRaycasts" index="9"]
+
+position = Vector2( 288, 1 )
+enabled = false
+exclude_parent = true
+cast_to = Vector2( 0, -16 )
+collision_mask = 1
+
+[node name="RayCast2D11" type="RayCast2D" parent="RiderRaycasts" index="10"]
+
+position = Vector2( 320, 1 )
+enabled = false
+exclude_parent = true
+cast_to = Vector2( 0, -16 )
+collision_mask = 1
 
 
