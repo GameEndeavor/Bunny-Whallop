@@ -2,13 +2,13 @@
 
 [ext_resource path="res://Character/Player/Player.gd" type="Script" id=1]
 [ext_resource path="res://Character/Player/PlatformerCamera.tscn" type="PackedScene" id=2]
-[ext_resource path="res://icon.png" type="Texture" id=3]
+[ext_resource path="res://Character/Player/PlayerRig.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Character/Player/PlayerStateMachine.tscn" type="PackedScene" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
 
 custom_solver_bias = 0.0
-extents = Vector2( 32, 32 )
+extents = Vector2( 25, 38 )
 
 [sub_resource type="RectangleShape2D" id=2]
 
@@ -33,11 +33,9 @@ _sections_unfolded = [ "Collision" ]
 
 [node name="Body" type="Node2D" parent="." index="1"]
 
-[node name="Sprite" type="Sprite" parent="Body" index="0"]
+[node name="PlayerRig" parent="Body" index="0" instance=ExtResource( 3 )]
 
-rotation = 1.5708
-texture = ExtResource( 3 )
-_sections_unfolded = [ "Transform" ]
+position = Vector2( 0, 20.5546 )
 
 [node name="Hand" type="Position2D" parent="Body" index="1"]
 
@@ -47,21 +45,23 @@ _sections_unfolded = [ "Transform" ]
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." index="2"]
 
 shape = SubResource( 1 )
+_sections_unfolded = [ "Transform" ]
 
 [node name="GroundRaycasts" type="Node2D" parent="." index="3"]
 
+editor/display_folded = true
+
 [node name="RayCast2D" type="RayCast2D" parent="GroundRaycasts" index="0"]
 
-position = Vector2( -31, 31 )
+position = Vector2( -24, 37 )
 enabled = true
 exclude_parent = true
 cast_to = Vector2( 0, 16 )
 collision_mask = 1
-_sections_unfolded = [ "Transform" ]
 
 [node name="RayCast2D2" type="RayCast2D" parent="GroundRaycasts" index="1"]
 
-position = Vector2( 0, 31 )
+position = Vector2( 0, 37 )
 enabled = true
 exclude_parent = true
 cast_to = Vector2( 0, 16 )
@@ -69,29 +69,25 @@ collision_mask = 1
 
 [node name="RayCast2D3" type="RayCast2D" parent="GroundRaycasts" index="2"]
 
-position = Vector2( 31, 31 )
+position = Vector2( 24, 37 )
 enabled = true
 exclude_parent = true
 cast_to = Vector2( 0, 16 )
 collision_mask = 1
-_sections_unfolded = [ "Transform" ]
 
 [node name="WallJumpRaycasts" type="Node2D" parent="." index="4"]
 
-editor/display_folded = true
-
 [node name="RightWallRaycast" type="RayCast2D" parent="WallJumpRaycasts" index="0"]
 
-position = Vector2( 31, 20 )
+position = Vector2( 24, 20 )
 enabled = true
 exclude_parent = true
 cast_to = Vector2( 8, 0 )
 collision_mask = 1
-_sections_unfolded = [ "Transform" ]
 
 [node name="LeftWallRaycast" type="RayCast2D" parent="WallJumpRaycasts" index="1"]
 
-position = Vector2( -31, 20 )
+position = Vector2( -24, 20 )
 enabled = true
 exclude_parent = true
 cast_to = Vector2( -8, 0 )

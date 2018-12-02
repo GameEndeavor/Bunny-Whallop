@@ -132,6 +132,18 @@ func _state_enter(state):
 	elif state == WALL_SLIDING:
 		parent.wall_stick_duration = 0
 		parent.velocity.x = 0
+	
+	# Animations
+	if state == IDLE:
+		parent.anim_player.play("idle")
+	elif state == RUNNING:
+		parent.anim_player.play("running")
+	elif state == JUMPING:
+		parent.anim_player.play("jumping")
+	elif state == FALLING:
+		parent.anim_player.play("falling")
+	elif state == WALL_SLIDING:
+		parent.anim_player.play("wall_sliding")
 
 func _state_exit(old_state, new_state):
 	if old_state == null: return

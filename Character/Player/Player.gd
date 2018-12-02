@@ -37,6 +37,7 @@ onready var state_machine = $PlayerStateMachine
 onready var wall_slide_wait_timer = $WallSlideWaitTimer
 onready var coyote_timer = $CoyoteTimer
 onready var grab_detection = $GrabDetection
+onready var anim_player = $Body/PlayerRig/AnimationPlayer
 
 func _physics_process(delta):
 	# Get input to determine which way to attempt to move
