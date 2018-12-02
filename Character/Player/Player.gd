@@ -1,17 +1,15 @@
 extends KinematicBody2D
 
+const RUN_SPEED = 8 * 64 # Number tiles the player will run per second and full speed
 const SLOPE_SLIDE_STOP = 5
 const MIN_JUMP_HEIGHT = 0.8 * 64
-const FALL_DURATION = 0.5
-const WALL_STICK_CHECK = 2.5 # Time in seconds player can move away from wall but still stick to it.
+const FALL_DURATION = 0.5 # Time in seconds it should take the player to fall 'Global.PLAYER_JUMP_HEIGHT' distance
+const WALL_STICK_CHECK = 0.3 # Time in seconds player can move away from wall but still stick to it.
 const WALL_CLIMB_HEIGHT = 4.25 * 64
 const WALL_LEAP_HEIGHT = 2.5 * 64
-const DEFAULT_MAX_VELOCITY = 1500
+const DEFAULT_MAX_VELOCITY = 1200
 const WALL_SLIDE_MAX_VELOCITY = 150
 const WALL_SLIDE_GRAVITY_MODIFIER = 0.25
-
-
-var move_speed = 8 * Global.UNIT_SIZE
 
 var velocity = Vector2()
 var max_fall_speed = DEFAULT_MAX_VELOCITY
@@ -21,11 +19,11 @@ var facing = 1 # Direction the player is facing
 var wall_direction = 0 setget ,_get_wall_direction # Direction of the wall if the player is wall_sliding
 var wall_stick_duration = 0 # Current duration player has been moving away from wall
 
+onready var fall_gravity = 2 * Global.PLAYER_JUMP_HEIGHT / pow(FALL_DURATION, 2)
 onready var max_jump_velocity = Utility.get_velocity_from_height(Global.PLAYER_JUMP_HEIGHT)
 onready var min_jump_velocity = Utility.get_velocity_from_height(MIN_JUMP_HEIGHT)
-onready var fall_gravity = 2 * Global.PLAYER_JUMP_HEIGHT / pow(FALL_DURATION, 2)
 onready var wall_climb_velocity = Vector2(800, Utility.get_velocity_from_height(WALL_CLIMB_HEIGHT))
-onready var wall_leap_velocity = Vector2(1200, Utility.get_velocity_from_height(WALL_LEAP_HEIGHT))
+onready var wall_leap_velocity = Vector2(800, Utility.get_velocity_from_height(WALL_LEAP_HEIGHT))
 
 onready var camera = $PlatformerCamera
 onready var ground_raycasts = $GroundRaycasts
@@ -46,7 +44,7 @@ func _input(event):
 
 func _apply_h_movement():
 	# Apply linear interpolation to create acceleration and deceleration
-	var target_speed = move_direction * move_speed
+	var target_speed = move_direction * RUN_SPEED
 	velocity.x = lerp(velocity.x, target_speed, _get_h_weight(target_speed))
 	# Determine facing from move_direction
 	if move_direction != 0:
@@ -56,6 +54,8 @@ func _apply_h_movement():
 func set_body_facing(facing = self.facing):
 	body.scale.x = facing
 
+# Apply gravity based on whether character is jumping or falling. Slow gravity when falling to allow
+# the player more time to align their landing.
 func _apply_gravity(delta, modifier = 1):
 	if velocity.y < 0:
 		velocity.y += Global.gravity * delta * modifier
@@ -97,6 +97,7 @@ func _check_wall_sliding():
 		return true
 	else: return false
 
+# Check the wall raycasts to determine which direction a wall is next to the player if any.
 func _get_wall_direction():
 	if $WallJumpRaycasts/RightWallRaycast.is_colliding():
 		wall_direction = Global.RIGHT
@@ -106,3 +107,8 @@ func _get_wall_direction():
 		wall_direction = 0
 	
 	return wall_direction
+
+func _on_HitboxArea_body_entered(body):
+	if body is TileMap:
+		get_tree().reload_current_scene()
+	pass # replace with function body

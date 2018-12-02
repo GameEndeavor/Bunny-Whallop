@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Character/Player/Player.gd" type="Script" id=1]
 [ext_resource path="res://Character/Player/PlatformerCamera.tscn" type="PackedScene" id=2]
@@ -10,7 +10,12 @@
 custom_solver_bias = 0.0
 extents = Vector2( 32, 32 )
 
-[node name="Player" type="KinematicBody2D" index="0"]
+[sub_resource type="RectangleShape2D" id=2]
+
+custom_solver_bias = 0.0
+extents = Vector2( 28, 28 )
+
+[node name="Player" type="KinematicBody2D"]
 
 input_pickable = false
 collision_layer = 32
@@ -89,5 +94,24 @@ process_mode = 1
 wait_time = 0.2
 one_shot = true
 autostart = false
+
+[node name="HitboxArea" type="Area2D" parent="." index="7"]
+
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+collision_layer = 64
+collision_mask = 4
+audio_bus_override = false
+audio_bus_name = "Master"
+_sections_unfolded = [ "Collision" ]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxArea" index="0"]
+
+shape = SubResource( 2 )
+
+[connection signal="body_entered" from="HitboxArea" to="." method="_on_HitboxArea_body_entered"]
 
 

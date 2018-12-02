@@ -3,19 +3,21 @@ extends Camera2D
 const SHIFT_TRANS = Tween.TRANS_CIRC
 const SHIFT_EASE = Tween.EASE_OUT
 const SHIFT_DURATION = 0.5
-const PANIC_TRANS = Tween.TRANS_CUBIC
+const PANIC_TRANS = Tween.TRANS_QUAD
 const PANIC_EASE = Tween.EASE_OUT
-const PANIC_DURATION = 0.4
+const PANIC_DURATION = 0.2
+const PANIC_RETURN_DURATION = 0.2
 const LOOK_AHEAD_FACTOR = 0.2
 const STEADY_TOP_MARGIN = 0.8
 const PANIC_SMOOTH_SPEED = 7
-const PANIC_LINE = 0.2
-const PANIC_Y_OFFSET = 5 * 64
+const PANIC_LINE = 0.15
+const PANIC_Y_OFFSET = 3 * 64
 
 var facing = 0
 var is_steady = false setget _set_is_steady
 var is_panicing = false setget _set_is_panicing
 var default_drag_margin_top
+var panic_offset = 0
 
 onready var default_smoothing_speed = smoothing_speed
 onready var previous_position = get_camera_position()
@@ -27,7 +29,10 @@ func _ready():
 
 func _process(delta):
 	_check_facing()
-	_check_panicing()
+	# Removed until I can figure out how to make this better
+#	_check_panicing()
+	
+	offset.y = panic_offset
 	
 	previous_position = get_camera_position()
 
@@ -66,12 +71,15 @@ func _set_is_steady(value):
 func _set_is_panicing(value):
 	if is_panicing != value:
 		if value:
+			print("panic")
 			smoothing_speed = PANIC_SMOOTH_SPEED
-			shift_tween.interpolate_property(self, "position:y", position.y, PANIC_Y_OFFSET, PANIC_DURATION, PANIC_TRANS, PANIC_EASE)
+			shift_tween.stop(self, "panic_offset")
+			shift_tween.interpolate_property(self, "panic_offset", panic_offset, PANIC_Y_OFFSET, PANIC_DURATION, PANIC_TRANS, PANIC_EASE)
 			shift_tween.start()
 		else:
 			smoothing_speed = default_smoothing_speed
-			shift_tween.interpolate_property(self, "position:y", position.y, 0, PANIC_DURATION, PANIC_TRANS, PANIC_EASE)
+			shift_tween.stop(self, "panic_offset")
+			shift_tween.interpolate_property(self, "panic_offset", panic_offset, 0, PANIC_RETURN_DURATION, PANIC_TRANS, PANIC_EASE)
 			shift_tween.start()
 	
 	is_panicing = value
