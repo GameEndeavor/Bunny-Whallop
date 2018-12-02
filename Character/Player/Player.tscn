@@ -116,6 +116,13 @@ _sections_unfolded = [ "Collision" ]
 
 shape = SubResource( 2 )
 
+[node name="CoyoteTimer" type="Timer" parent="." index="8"]
+
+process_mode = 1
+wait_time = 0.2
+one_shot = true
+autostart = false
+
 [connection signal="body_entered" from="HitboxArea" to="." method="_on_HitboxArea_body_entered"]
 
 

@@ -6,6 +6,7 @@ const MIN_JUMP_HEIGHT = 0.8 * 64
 const FALL_DURATION = 0.5 # Time in seconds it should take the player to fall 'Global.PLAYER_JUMP_HEIGHT' distance
 const WALL_STICK_CHECK = 0.3 # Time in seconds player can move away from wall but still stick to it.
 const WALL_CLIMB_HEIGHT = 5.25 * 64
+const WALL_HOP_HEIGHT = 3.5 * 64
 const WALL_LEAP_HEIGHT = 2.5 * 64
 const MAX_VELOCITY = 1200
 const WALL_SLIDE_MAX_VELOCITY = 150
@@ -22,13 +23,15 @@ onready var fall_gravity = 2 * Global.PLAYER_JUMP_HEIGHT / pow(FALL_DURATION, 2)
 onready var max_jump_velocity = Utility.get_velocity_from_height(Global.PLAYER_JUMP_HEIGHT)
 onready var min_jump_velocity = Utility.get_velocity_from_height(MIN_JUMP_HEIGHT)
 onready var wall_climb_velocity = Vector2(1200, Utility.get_velocity_from_height(WALL_CLIMB_HEIGHT))
-onready var wall_leap_velocity = Vector2(800, Utility.get_velocity_from_height(WALL_LEAP_HEIGHT))
+onready var wall_hop_velocity = Vector2(600, Utility.get_velocity_from_height(WALL_HOP_HEIGHT))
+onready var wall_leap_velocity = Vector2(1200, Utility.get_velocity_from_height(WALL_LEAP_HEIGHT))
 
 onready var camera = $PlatformerCamera
 onready var ground_raycasts = $GroundRaycasts
 onready var body = $Body
 onready var state_machine = $PlayerStateMachine
 onready var wall_slide_wait_timer = $WallSlideWaitTimer
+onready var coyote_timer = $CoyoteTimer
 
 func _physics_process(delta):
 	# Get input to determine which way to attempt to move
@@ -38,6 +41,9 @@ func _physics_process(delta):
 	
 	var was_grounded = is_grounded
 	is_grounded = is_on_floor()
+	
+	if !is_grounded && was_grounded:
+		coyote_timer.start()
 
 func _input(event):
 	state_machine.state_input(event)
@@ -89,7 +95,7 @@ func _get_h_weight(target_speed):
 	# This is meant to provide less deceleration in air while maintaining tight controls
 	if move_direction == sign(velocity.x) && abs(velocity.x) > abs(target_speed):
 		if !is_grounded:
-			weight *= 0.25
+			weight *= 0.05
 	
 	return weight
 
