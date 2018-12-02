@@ -4,8 +4,8 @@ const SLOPE_SLIDE_STOP = 5
 const MIN_JUMP_HEIGHT = 0.8 * 64
 const FALL_DURATION = 0.5
 const WALL_STICK_CHECK = 2.5 # Time in seconds player can move away from wall but still stick to it.
-const WALL_CLIMB_HEIGHT = 4 * 64
-const WALL_LEAP_HEIGHT = 1 * 64
+const WALL_CLIMB_HEIGHT = 4.25 * 64
+const WALL_LEAP_HEIGHT = 2.5 * 64
 const DEFAULT_MAX_VELOCITY = 1500
 const WALL_SLIDE_MAX_VELOCITY = 150
 const WALL_SLIDE_GRAVITY_MODIFIER = 0.25
@@ -25,7 +25,7 @@ onready var max_jump_velocity = Utility.get_velocity_from_height(Global.PLAYER_J
 onready var min_jump_velocity = Utility.get_velocity_from_height(MIN_JUMP_HEIGHT)
 onready var fall_gravity = 2 * Global.PLAYER_JUMP_HEIGHT / pow(FALL_DURATION, 2)
 onready var wall_climb_velocity = Vector2(800, Utility.get_velocity_from_height(WALL_CLIMB_HEIGHT))
-onready var wall_leap_velocity = Vector2(1500, Utility.get_velocity_from_height(WALL_LEAP_HEIGHT))
+onready var wall_leap_velocity = Vector2(1200, Utility.get_velocity_from_height(WALL_LEAP_HEIGHT))
 
 onready var camera = $PlatformerCamera
 onready var ground_raycasts = $GroundRaycasts
@@ -79,7 +79,7 @@ func _check_raycasts(raycasts):
 
 # Checks conditions to determine what weight to apply to character acceleration / deceleration
 func _get_h_weight(target_speed):
-	var weight = 0.4 if is_grounded else 0.1
+	var weight = 0.4 if is_grounded else 0.125
 	
 	# If player is pressing move towards velocity
 	# And player is moving faster than their speed
