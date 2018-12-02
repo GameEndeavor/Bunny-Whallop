@@ -54,6 +54,8 @@ _sections_unfolded = [ "Transform" ]
 
 [node name="Characters" type="Node2D" parent="." index="2"]
 
-[node name="Player" type="Node2D" parent="Characters" index="0"]
+[node name="Critters" type="Node2D" parent="Characters" index="0"]
+
+[node name="Player" type="Node2D" parent="Characters" index="1"]
 
 

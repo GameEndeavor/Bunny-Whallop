@@ -15,7 +15,7 @@ extents = Vector2( 32, 32 )
 custom_solver_bias = 0.0
 extents = Vector2( 20, 20 )
 
-[node name="Player" type="KinematicBody2D"]
+[node name="Player" type="KinematicBody2D" index="0"]
 
 input_pickable = false
 collision_layer = 32
@@ -42,15 +42,14 @@ shape = SubResource( 1 )
 
 [node name="GroundRaycasts" type="Node2D" parent="." index="3"]
 
-editor/display_folded = true
-
 [node name="RayCast2D" type="RayCast2D" parent="GroundRaycasts" index="0"]
 
-position = Vector2( -32, 31 )
+position = Vector2( -31, 31 )
 enabled = true
 exclude_parent = true
 cast_to = Vector2( 0, 16 )
 collision_mask = 1
+_sections_unfolded = [ "Transform" ]
 
 [node name="RayCast2D2" type="RayCast2D" parent="GroundRaycasts" index="1"]
 
@@ -62,11 +61,12 @@ collision_mask = 1
 
 [node name="RayCast2D3" type="RayCast2D" parent="GroundRaycasts" index="2"]
 
-position = Vector2( 32, 31 )
+position = Vector2( 31, 31 )
 enabled = true
 exclude_parent = true
 cast_to = Vector2( 0, 16 )
 collision_mask = 1
+_sections_unfolded = [ "Transform" ]
 
 [node name="WallJumpRaycasts" type="Node2D" parent="." index="4"]
 

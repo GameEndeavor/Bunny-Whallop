@@ -49,6 +49,19 @@ centered = false
 flip_v = true
 _sections_unfolded = [ "Z Index" ]
 
+[node name="SpikeCollision" type="KinematicBody2D" parent="KinematicBody2D/Platform" index="3"]
+
+input_pickable = false
+collision_layer = 4
+collision_mask = 0
+collision/safe_margin = 0.08
+_sections_unfolded = [ "Collision" ]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="KinematicBody2D/Platform/SpikeCollision" index="0"]
+
+build_mode = 0
+polygon = PoolVector2Array( 68, 192, 252, 192, 244, 208, 76, 208 )
+
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="KinematicBody2D" index="1"]
 
 build_mode = 0
