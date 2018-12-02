@@ -1,13 +1,11 @@
 [gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Tilesets/ProtoTileset/HazardTileset.tres" type="TileSet" id=1]
-[ext_resource path="res://Tilesets/ProtoTileset/ProtoTileset.tres" type="TileSet" id=2]
+[ext_resource path="res://Tilesets/Tileset/DungeonTileset.tres" type="TileSet" id=2]
 
 [node name="Level" type="Node2D"]
 
 [node name="Tilemaps" type="Node2D" parent="." index="0"]
-
-editor/display_folded = true
 
 [node name="Hazards" type="TileMap" parent="Tilemaps" index="0"]
 
