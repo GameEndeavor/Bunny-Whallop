@@ -1,7 +1,7 @@
 extends Node
 
 enum States {
-	IDLE, RUNNING, JUMPING, FALLING, WALL_SLIDING
+	IDLE, RUNNING, JUMPING, FALLING, WALL_SLIDING, END_LEVEL
 }
 
 var state = IDLE setget _set_state
@@ -15,6 +15,10 @@ func state_physics_process(delta):
 	elif state == IDLE || state == RUNNING || state == JUMPING || state == FALLING:
 		parent._apply_gravity(delta)
 #		parent._set_velocity_to_floor()
+		if !parent.is_force_walking:
+			parent._get_move_input()
+		else:
+			parent.move_direction = Global.RIGHT
 		parent._apply_h_movement()
 		parent.set_body_facing()
 		parent._apply_movement()
@@ -23,6 +27,9 @@ func state_physics_process(delta):
 	elif state == WALL_SLIDING:
 		var max_velocity = parent.MAX_VELOCITY if Input.is_action_pressed("move_down") else parent.WALL_SLIDE_MAX_VELOCITY
 		parent._apply_gravity(delta, max_velocity)
+		parent._get_move_input()
+		if parent.move_direction == parent.wall_direction:
+			parent._apply_h_movement()
 		parent.set_body_facing(-parent.facing)
 		parent._apply_movement()
 		# Timer that will keep the player stuck to the wall if they try moving off of it
@@ -131,6 +138,8 @@ func _state_enter(state):
 		parent.camera.is_steady = true
 	elif state == WALL_SLIDING:
 		parent.wall_stick_duration = 0
+		parent.velocity.x = 0
+	elif state == END_LEVEL:
 		parent.velocity.x = 0
 	
 	# Animations

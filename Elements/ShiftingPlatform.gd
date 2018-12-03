@@ -4,7 +4,6 @@ const FALL_DISTANCE = 128
 
 var velocity = Vector2()
 onready var platform = $KinematicBody2D
-onready var rider_raycasts = $RiderRaycasts
 
 func _ready():
 	set_physics_process(false)

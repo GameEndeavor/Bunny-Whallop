@@ -41,4 +41,8 @@ _sections_unfolded = [ "Transform" ]
 move_to = Vector2( 0, 256 )
 move_time = 1.5
 
+[node name="LevelFinish" parent="." index="6"]
+
+position = Vector2( 1536, -2688 )
+
 

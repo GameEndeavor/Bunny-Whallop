@@ -21,6 +21,7 @@ var wall_direction = 0 setget ,_get_wall_direction # Direction of the wall if th
 var wall_stick_duration = 0 # Current duration player has been moving away from wall
 var held_object = null setget _set_held_object,_get_held_object
 var obj_container
+var is_force_walking = false
 
 onready var fall_gravity = 2 * Global.PLAYER_JUMP_HEIGHT / pow(FALL_DURATION, 2)
 onready var max_jump_velocity = Utility.get_velocity_from_height(Global.PLAYER_JUMP_HEIGHT)
@@ -39,9 +40,12 @@ onready var coyote_timer = $CoyoteTimer
 onready var grab_detection = $GrabDetection
 onready var anim_player = $Body/PlayerRig/AnimationPlayer
 
+func _ready():
+	_set_on_ground()
+	$HoldControls.start()
+
 func _physics_process(delta):
 	# Get input to determine which way to attempt to move
-	move_direction = -int(Input.is_action_pressed("move_left")) + int(Input.is_action_pressed("move_right"))
 	state_machine.state_physics_process(delta)
 	_check_raycasts(ground_raycasts)
 	
@@ -52,7 +56,12 @@ func _physics_process(delta):
 		coyote_timer.start()
 
 func _input(event):
-	state_machine.state_input(event)
+	if $HoldControls.is_stopped():
+		state_machine.state_input(event)
+
+func _get_move_input():
+	if $HoldControls.is_stopped():
+		move_direction = -int(Input.is_action_pressed("move_left")) + int(Input.is_action_pressed("move_right"))
 
 func _apply_h_movement():
 	# Apply linear interpolation to create acceleration and deceleration
@@ -79,6 +88,13 @@ func _apply_gravity(delta, max_velocity = MAX_VELOCITY):
 # Move player with physics
 func _apply_movement():
 	velocity = move_and_slide(velocity, Global.UP_VEC, SLOPE_SLIDE_STOP)
+
+func _set_on_ground():
+	var space_state = get_world_2d().direct_space_state
+	var check_distance = 256
+	var result = space_state.intersect_ray(position, position + Vector2(0, check_distance), [self], collision_mask)
+	if result:
+		position.y = result.position.y - $CollisionShape2D.shape.extents.y - 1
 
 func grab_nearest():
 	# Get bodies within reach
@@ -186,3 +202,6 @@ func _get_held_object():
 	if held_object == null: return null
 	else:
 		return held_object.get_ref()
+
+func _on_level_complete():
+	is_force_walking = true

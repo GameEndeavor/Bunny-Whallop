@@ -11,7 +11,7 @@ config_version=3
 [application]
 
 config/name="LudumDare43"
-run/main_scene="res://Level/Levels/OfcSaws.tscn"
+run/main_scene="res://StartMenu.tscn"
 config/icon="res://icon.png"
 
 [autoload]
