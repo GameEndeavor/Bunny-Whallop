@@ -20,7 +20,7 @@ extents = Vector2( 20, 20 )
 custom_solver_bias = 0.0
 radius = 64.0
 
-[node name="Player" type="KinematicBody2D" index="0" groups=[
+[node name="Player" type="KinematicBody2D" groups=[
 "player",
 ]]
 
@@ -59,7 +59,7 @@ _sections_unfolded = [ "Transform" ]
 position = Vector2( -24, 37 )
 enabled = true
 exclude_parent = true
-cast_to = Vector2( 0, 16 )
+cast_to = Vector2( 0, 8 )
 collision_mask = 1
 
 [node name="RayCast2D2" type="RayCast2D" parent="GroundRaycasts" index="1"]
@@ -67,7 +67,7 @@ collision_mask = 1
 position = Vector2( 0, 37 )
 enabled = true
 exclude_parent = true
-cast_to = Vector2( 0, 16 )
+cast_to = Vector2( 0, 8 )
 collision_mask = 1
 
 [node name="RayCast2D3" type="RayCast2D" parent="GroundRaycasts" index="2"]
@@ -75,7 +75,7 @@ collision_mask = 1
 position = Vector2( 24, 37 )
 enabled = true
 exclude_parent = true
-cast_to = Vector2( 0, 16 )
+cast_to = Vector2( 0, 8 )
 collision_mask = 1
 
 [node name="WallJumpRaycasts" type="Node2D" parent="." index="4"]
@@ -85,7 +85,7 @@ collision_mask = 1
 position = Vector2( 24, 20 )
 enabled = true
 exclude_parent = true
-cast_to = Vector2( 16, 0 )
+cast_to = Vector2( 8, 0 )
 collision_mask = 1
 
 [node name="LeftWallRaycast" type="RayCast2D" parent="WallJumpRaycasts" index="1"]
@@ -93,7 +93,7 @@ collision_mask = 1
 position = Vector2( -24, 20 )
 enabled = true
 exclude_parent = true
-cast_to = Vector2( -16, 0 )
+cast_to = Vector2( -8, 0 )
 collision_mask = 1
 _sections_unfolded = [ "Transform" ]
 
@@ -126,7 +126,7 @@ shape = SubResource( 2 )
 [node name="CoyoteTimer" type="Timer" parent="." index="8"]
 
 process_mode = 1
-wait_time = 0.2
+wait_time = 0.1
 one_shot = true
 autostart = false
 

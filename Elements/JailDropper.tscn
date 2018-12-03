@@ -64,12 +64,13 @@ polygon = PoolVector2Array( 0, 0, 320, 0, 320, 256, 288, 256, 288, 32, 32, 32, 3
 
 [node name="Doors" type="Node2D" parent="." index="1"]
 
-editor/display_folded = true
+show_behind_parent = true
+_sections_unfolded = [ "Material", "Visibility" ]
 
 [node name="LeftDoor" type="Node2D" parent="Doors" index="0"]
 
 editor/display_folded = true
-position = Vector2( 16, 272 )
+position = Vector2( 16, 240 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="DoorBody" type="KinematicBody2D" parent="Doors/LeftDoor" index="0"]
@@ -96,7 +97,7 @@ polygon = PoolVector2Array( 0, 0, 160, 0, 160, 32, 0, 32 )
 [node name="RightDoor" type="Node2D" parent="Doors" index="1"]
 
 editor/display_folded = true
-position = Vector2( 304, 272 )
+position = Vector2( 304, 240 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="DoorBody" type="KinematicBody2D" parent="Doors/RightDoor" index="0"]
@@ -122,17 +123,20 @@ polygon = PoolVector2Array( 0, 0, 160, 0, 160, 32, 0, 32 )
 
 [node name="Critters" type="Node2D" parent="." index="2"]
 
+show_behind_parent = true
+_sections_unfolded = [ "Visibility" ]
+
 [node name="Critter" parent="Critters" index="0" instance=ExtResource( 4 )]
 
-position = Vector2( 96, 224 )
+position = Vector2( 96, 192 )
 
 [node name="Critter2" parent="Critters" index="1" instance=ExtResource( 4 )]
 
-position = Vector2( 224, 224 )
+position = Vector2( 224, 192 )
 
 [node name="Critter3" parent="Critters" index="2" instance=ExtResource( 4 )]
 
-position = Vector2( 160, 224 )
+position = Vector2( 160, 192 )
 
 [node name="DoorAnimator" type="AnimationPlayer" parent="." index="3"]
 

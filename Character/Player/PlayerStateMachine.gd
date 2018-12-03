@@ -30,7 +30,7 @@ func state_physics_process(delta):
 		parent._get_move_input()
 		if parent.move_direction == parent.wall_direction:
 			parent._apply_h_movement()
-		parent.set_body_facing(-parent.facing)
+		parent.set_body_facing(-parent.wall_direction)
 		parent._apply_movement()
 		# Timer that will keep the player stuck to the wall if they try moving off of it
 		if parent.move_direction != 0 && !parent._check_wall_sliding():
@@ -58,15 +58,17 @@ func state_input(event):
 			parent.velocity.y = parent.max_jump_velocity
 		# Wall Jump
 		elif state == WALL_SLIDING:
+			parent.can_glide = false
 			# If player is moving towards wall then climb up the wall
-			if parent.move_direction == parent.wall_direction:
+			if parent.move_direction == 0 || parent.move_direction == parent.wall_direction:
 				parent.velocity = parent.wall_climb_velocity * Vector2(-parent.wall_direction, 1)
-			# If player isn't moving then hop off of the wall
-			elif parent.move_direction == 0:
-				parent.velocity = parent.wall_hop_velocity * Vector2(-parent.wall_direction, 1)
+#			# If player isn't moving then hop off of the wall
+#			elif parent.move_direction == 0:
+#				parent.velocity = parent.wall_hop_velocity * Vector2(-parent.wall_direction, 1)
 			# Else player is moving away from the wall, so leap off of it
 			else:
 				parent.velocity = parent.wall_leap_velocity * Vector2(-parent.wall_direction, 1)
+				parent.can_glide = true
 			_set_state(JUMPING)
 	elif event.is_action_released("jump") && parent.velocity.y < parent.min_jump_velocity && state == JUMPING:
 			# Variable Jump

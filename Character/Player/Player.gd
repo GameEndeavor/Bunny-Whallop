@@ -22,6 +22,7 @@ var wall_stick_duration = 0 # Current duration player has been moving away from 
 var held_object = null setget _set_held_object,_get_held_object
 var obj_container
 var is_force_walking = false
+var can_glide = false
 
 onready var fall_gravity = 2 * Global.PLAYER_JUMP_HEIGHT / pow(FALL_DURATION, 2)
 onready var max_jump_velocity = Utility.get_velocity_from_height(Global.PLAYER_JUMP_HEIGHT)
@@ -161,9 +162,9 @@ func _get_h_weight(target_speed):
 	# If player is pressing move towards velocity
 	# And player is moving faster than their speed
 	# This is meant to provide less deceleration in air while maintaining tight controls
-	if move_direction == sign(velocity.x) && abs(velocity.x) > abs(target_speed):
+	if can_glide && move_direction == sign(velocity.x) && abs(velocity.x) > abs(target_speed):
 		if !is_grounded:
-			weight *= 0.05
+			weight = 0
 	
 	return weight
 
