@@ -11,7 +11,7 @@ extents = Vector2( 24, 24 )
 [sub_resource type="RectangleShape2D" id=2]
 
 custom_solver_bias = 0.0
-extents = Vector2( 48, 48 )
+extents = Vector2( 24, 24 )
 
 [node name="Critter" type="KinematicBody2D"]
 

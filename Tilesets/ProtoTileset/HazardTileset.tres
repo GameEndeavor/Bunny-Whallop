@@ -1,6 +1,6 @@
 [gd_resource type="TileSet" load_steps=3 format=2]
 
-[ext_resource path="res://Tilesets/ProtoTileset/Spikes.png" type="Texture" id=1]
+[ext_resource path="res://Hazard/Spikes.png" type="Texture" id=1]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 
@@ -23,4 +23,5 @@ points = PoolVector2Array( 0, 32, 64, 32, 64, 64, 0, 64 )
 "shape": SubResource( 1 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 } ]
+_sections_unfolded = [ "0" ]
 

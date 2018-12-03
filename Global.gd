@@ -2,7 +2,7 @@ extends Node
 
 const UNIT_SIZE = 64
 
-const PLAYER_JUMP_HEIGHT = 2.75 * UNIT_SIZE
+const PLAYER_JUMP_HEIGHT = 3.75 * UNIT_SIZE
 const JUMP_DURATION = 0.4
 
 const UP_VEC = Vector2(0, -1)

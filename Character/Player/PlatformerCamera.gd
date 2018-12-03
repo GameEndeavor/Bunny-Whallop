@@ -13,7 +13,7 @@ const PANIC_SMOOTH_SPEED = 7
 const PANIC_LINE = 0.15
 const PANIC_Y_OFFSET = 3 * 64
 
-var facing = 0
+var facing = 1
 var is_steady = false setget _set_is_steady
 var is_panicing = false setget _set_is_panicing
 var default_drag_margin_top
@@ -26,6 +26,7 @@ onready var shift_tween = $ShiftTween
 
 func _ready():
 	default_drag_margin_top = drag_margin_top
+	position.x = get_viewport_rect().size.x * LOOK_AHEAD_FACTOR * facing
 
 func _process(delta):
 	_check_facing()

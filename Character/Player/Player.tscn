@@ -31,6 +31,9 @@ _sections_unfolded = [ "Collision" ]
 
 [node name="PlatformerCamera" parent="." index="0" instance=ExtResource( 2 )]
 
+position = Vector2( 0, -64 )
+_sections_unfolded = [ "Drag Margin", "Smoothing", "Transform" ]
+
 [node name="Body" type="Node2D" parent="." index="1"]
 
 [node name="PlayerRig" parent="Body" index="0" instance=ExtResource( 3 )]
@@ -48,8 +51,6 @@ shape = SubResource( 1 )
 _sections_unfolded = [ "Transform" ]
 
 [node name="GroundRaycasts" type="Node2D" parent="." index="3"]
-
-editor/display_folded = true
 
 [node name="RayCast2D" type="RayCast2D" parent="GroundRaycasts" index="0"]
 

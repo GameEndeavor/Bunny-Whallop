@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Elements/JailDropper.gd" type="Script" id=1]
 [ext_resource path="res://Elements/JailCase.png" type="Texture" id=2]
 [ext_resource path="res://Elements/JailDoor.png" type="Texture" id=3]
+[ext_resource path="res://Character/Critters/AbstractCritter.tscn" type="PackedScene" id=4]
 
 [sub_resource type="Animation" id=1]
 
@@ -41,6 +42,7 @@ script = ExtResource( 1 )
 
 [node name="Case" type="StaticBody2D" parent="." index="0"]
 
+editor/display_folded = true
 input_pickable = false
 collision_layer = 1
 collision_mask = 1
@@ -61,6 +63,8 @@ build_mode = 0
 polygon = PoolVector2Array( 0, 0, 320, 0, 320, 256, 288, 256, 288, 32, 32, 32, 32, 256, 0, 256 )
 
 [node name="Doors" type="Node2D" parent="." index="1"]
+
+editor/display_folded = true
 
 [node name="LeftDoor" type="Node2D" parent="Doors" index="0"]
 
@@ -116,7 +120,21 @@ _sections_unfolded = [ "Offset" ]
 build_mode = 0
 polygon = PoolVector2Array( 0, 0, 160, 0, 160, 32, 0, 32 )
 
-[node name="DoorAnimator" type="AnimationPlayer" parent="." index="2"]
+[node name="Critters" type="Node2D" parent="." index="2"]
+
+[node name="Critter" parent="Critters" index="0" instance=ExtResource( 4 )]
+
+position = Vector2( 96, 224 )
+
+[node name="Critter2" parent="Critters" index="1" instance=ExtResource( 4 )]
+
+position = Vector2( 224, 224 )
+
+[node name="Critter3" parent="Critters" index="2" instance=ExtResource( 4 )]
+
+position = Vector2( 160, 224 )
+
+[node name="DoorAnimator" type="AnimationPlayer" parent="." index="3"]
 
 root_node = NodePath("..")
 autoplay = ""

@@ -27,7 +27,7 @@ onready var max_jump_velocity = Utility.get_velocity_from_height(Global.PLAYER_J
 onready var min_jump_velocity = Utility.get_velocity_from_height(MIN_JUMP_HEIGHT)
 onready var wall_climb_velocity = Vector2(1200, Utility.get_velocity_from_height(WALL_CLIMB_HEIGHT))
 onready var wall_hop_velocity = Vector2(600, Utility.get_velocity_from_height(WALL_HOP_HEIGHT))
-onready var wall_leap_velocity = Vector2(1200, Utility.get_velocity_from_height(WALL_LEAP_HEIGHT))
+onready var wall_leap_velocity = Vector2(800, Utility.get_velocity_from_height(WALL_LEAP_HEIGHT))
 onready var throw_velocity = Vector2(600, Utility.get_velocity_from_height(THROW_HEIGHT))
 
 onready var camera = $PlatformerCamera
@@ -46,7 +46,7 @@ func _physics_process(delta):
 	_check_raycasts(ground_raycasts)
 	
 	var was_grounded = is_grounded
-	is_grounded = is_on_floor()
+	is_grounded = state_machine.state != state_machine.JUMPING && (is_on_floor() || _check_raycasts(ground_raycasts))
 	
 	if !is_grounded && was_grounded:
 		coyote_timer.start()
@@ -169,10 +169,12 @@ func _get_wall_direction():
 	
 	return wall_direction
 
+func kill():
+	get_tree().reload_current_scene()
+
 func _on_HitboxArea_body_entered(body):
 	if body is TileMap:
-		get_tree().reload_current_scene()
-	pass # replace with function body
+		kill()
 
 func _set_held_object(value):
 	if value != null:
