@@ -7,8 +7,9 @@
 [node name="MovingSawblade" type="Node2D"]
 
 script = ExtResource( 1 )
-move_to = Vector2( 0, 512 )
-move_time = 2.0
+side = 1
+move_to = Vector2( 0, 256 )
+move_time = 1.5
 
 [node name="SawBlade" parent="." index="0" instance=ExtResource( 2 )]
 
@@ -24,6 +25,22 @@ playback/speed = 1.0
 [node name="DrawAssistant" type="Node2D" parent="." index="2"]
 
 script = ExtResource( 3 )
+
+[node name="TriggerTween" type="Tween" parent="." index="3"]
+
+repeat = false
+playback_process_mode = 1
+playback_speed = 1.0
+playback/active = false
+playback/repeat = false
+playback/speed = 1.0
+
+[node name="TriggerTimer" type="Timer" parent="." index="4"]
+
+process_mode = 1
+wait_time = 0.4
+one_shot = true
+autostart = false
 
 [connection signal="tween_completed" from="Tween" to="." method="_on_Tween_tween_completed"]
 

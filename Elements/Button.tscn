@@ -33,4 +33,6 @@ polygon = PoolVector2Array( 0, 52, 64, 52, 64, 64, 0, 64 )
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]
 
+[connection signal="body_exited" from="Area2D" to="." method="_on_Area2D_body_exited"]
+
 

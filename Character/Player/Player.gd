@@ -187,6 +187,8 @@ func _get_wall_direction():
 	return wall_direction
 
 func kill():
+	state_machine.state = state_machine.DEAD
+	yield(get_tree().create_timer(0.8), "timeout")
 	get_tree().reload_current_scene()
 
 func _on_HitboxArea_body_entered(body):

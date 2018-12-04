@@ -1,7 +1,7 @@
 extends Node
 
 enum States {
-	IDLE, RUNNING, JUMPING, FALLING, WALL_SLIDING, END_LEVEL
+	IDLE, RUNNING, JUMPING, FALLING, WALL_SLIDING, DEAD
 }
 
 var state = IDLE setget _set_state
@@ -141,8 +141,6 @@ func _state_enter(state):
 	elif state == WALL_SLIDING:
 		parent.wall_stick_duration = 0
 		parent.velocity.x = 0
-	elif state == END_LEVEL:
-		parent.velocity.x = 0
 	
 	# Animations
 	if state == IDLE:
@@ -155,6 +153,8 @@ func _state_enter(state):
 		parent.anim_player.play("falling")
 	elif state == WALL_SLIDING:
 		parent.anim_player.play("wall_sliding")
+	elif state == DEAD:
+		parent.anim_player.play("dead")
 
 func _state_exit(old_state, new_state):
 	if old_state == null: return

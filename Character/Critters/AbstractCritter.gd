@@ -10,5 +10,8 @@ func _physics_process(delta):
 	if is_on_floor():
 		velocity.x = lerp(velocity.x, 0, 0.2)
 
+func kill():
+	$AnimationPlayer.play("dead")
+	
 func _on_Hitbox_body_entered(body):
-	queue_free()
+	kill()

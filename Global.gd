@@ -13,6 +13,7 @@ const RIGHT = 1
 const END_SCENE = "res://EndScene.tscn"
 
 var current_level = 0
+var music_position = 0
 
 onready var gravity = 2 * PLAYER_JUMP_HEIGHT / pow(JUMP_DURATION, 2)
 
